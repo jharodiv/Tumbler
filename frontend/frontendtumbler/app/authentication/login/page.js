@@ -3,6 +3,7 @@
 import { use, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import {loginUser} from "@/api/authentication";
 
 export default function LoginPage(){
     const router = useRouter();
@@ -10,37 +11,22 @@ export default function LoginPage(){
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("");
 
-        try {
-            const response = await fetch("http://127.0.0.1:8000/login/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-            }),
-            });
+        try{
+            const data = await loginUser(username, password);
 
-            if(!response.ok){
-                setError("Invalid Username or password");
-                return;
-            }
 
-            const data = await response.json();
-
-            localStorage.setItem("access_token",data.access);
-            localStorage.setItem("refresh_token",data.refresh);
+            //Store tokens
+            localStorage.setItem("access_token", data.access);
+            localStorage.setItem("refresh_tooken", data.refresh);
 
             router.push("/dashboard");
-        } catch (err){
+        } catch (err) {
             console.error(err);
-            setError("Invalid username or password");
+            setError(err.message);
         }
     };
 
