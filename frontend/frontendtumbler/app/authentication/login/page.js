@@ -3,7 +3,8 @@
 import { use, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import {loginUser} from "@/api/authentication";
+//import { loginUser } from "@/lib/authentication";
+import { loginUser } from "@/lib/auth";
 
 export default function LoginPage(){
     const router = useRouter();
