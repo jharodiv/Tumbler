@@ -46,6 +46,8 @@ INSTALLED_APPS = [
 
     #local
     'core',
+    'assets',
+    'user'
 ]
 
 MIDDLEWARE = [

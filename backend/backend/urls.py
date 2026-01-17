@@ -16,4 +16,6 @@ urlpatterns = [
 
     #users
     path('api/user/', include('user.urls')),
+    #assets
+    path('api/', include('assets.urls')),
 ]
