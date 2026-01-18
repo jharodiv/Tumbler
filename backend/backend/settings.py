@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     #ThirdParty
     'rest_framework',
+    'corsheaders',
 
     #local
     'core',
@@ -58,7 +59,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
 
 ROOT_URLCONF = 'backend.urls'
 
