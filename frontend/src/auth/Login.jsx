@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { login } from "./authService";
+import { useNavigate } from "react-router-dom";
 
 
 function Login()
 { 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate()
 
 
     const handleSubmit = async (e) => 
@@ -15,11 +17,12 @@ function Login()
         try
         {
             const data = await login(username, password);
-            console.log(data)
+            console.log(data);
+            navigate("/assets");
             alert("Login Successful");
         } catch (err)
         {
-            console.log(data)
+            console.error(err)
             alert("Login Failed");
         }
     };

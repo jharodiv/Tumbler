@@ -1,12 +1,15 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./auth/Login";
 import AssetList from "./assets/AssetList";
 
 function App() {
   return (
-    <>
-      <Login />
-      <AssetList />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login/>}/>
+        <Route path="/assets" element={<AssetList/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
