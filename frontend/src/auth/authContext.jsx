@@ -9,12 +9,12 @@ export function AuthProvider ({children}){
     useEffect(() => 
     {
         const token = localStorage.getItem("access");
-        if (token) setIsAuthenticated(true);
+        if (token) setAuthenticated(true);
 
     }, []);
 
 
-    const loginUser = () => setIsAuthenticated(true);
+    const loginUser = () => setAuthenticated(true);
     const logoutUser = () => {
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
