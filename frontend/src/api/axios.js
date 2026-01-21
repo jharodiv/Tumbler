@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
     //baseURL: "http://127.0.0.1:8000/api/"
-    baseURL: "https://psychic-space-acorn-4j7jq659v7q524v5-8000.app.github.dev/api/",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     headers:{
         "Content-Type": "application/json"
     }
