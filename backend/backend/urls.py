@@ -17,4 +17,6 @@ urlpatterns = [
     path('api/user/', include('user.urls')),
     #assets
     path('api/', include('assets.urls')),
+
+    #python manage.py runserver 0.0.0.0:8000
 ]

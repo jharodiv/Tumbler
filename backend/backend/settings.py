@@ -64,6 +64,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://psychic-space-acorn-4j7jq659v7q524v5-5173.app.github.dev",
 ]
 
 
