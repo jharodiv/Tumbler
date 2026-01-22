@@ -21,3 +21,4 @@ api.interceptors.request.use((config) =>
 export default api;
 
 //This how react talks securely to Django
+//daily
