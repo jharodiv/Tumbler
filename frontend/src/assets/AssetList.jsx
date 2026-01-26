@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import AssetCreate from "../assets/AssetCreate";
 
 
 function AssetList()
 {
     const [assets, setAssets] = useState([]);
 
-    loadAssets(() =>
+    const loadAssets = () =>
     {
         api.get("assets/")
-            .then((res) => setAssets(res.data))
-            .catch(() => alert("Unauthorized"));
-    }, []);
+            .then((res) => {
+                console.log("Assets from backend", res.data);
+                setAssets(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("Unauthorized or failed to load assets");
+            });
+    };
 
-    useEffect(loadAssets, []);
+    useEffect(() => {
+        loadAssets();
+    }, []);
 
     return (
         <>

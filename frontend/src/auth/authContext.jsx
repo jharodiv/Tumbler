@@ -19,7 +19,7 @@ export function AuthProvider ({children}){
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
         setAuthenticated(false);
-    };
+    };  
 
 
     return (

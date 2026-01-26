@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createAsset } from "./assetServices";
 
 function AssetCreate( {onCreated} ){
-    const [name, setName] = useState = ("");
+    const [name, setName] = useState ("");
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -21,3 +21,5 @@ function AssetCreate( {onCreated} ){
         </form>
     );
 }
+
+export default AssetCreate;
