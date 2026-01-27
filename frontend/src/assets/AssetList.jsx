@@ -1,30 +1,41 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import AssetCreate from "../assets/AssetCreate";
 
 
 function AssetList()
 {
     const [assets, setAssets] = useState([]);
 
-    loadAssets(() =>
+    const loadAssets = () =>
     {
         api.get("assets/")
-            .then((res) => setAssets(res.data))
-            .catch(() => alert("Unauthorized"));
+            .then((res) => {
+                console.log("Assets from backend", res.data);
+                setAssets(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("Unauthorized or failed to load assets");
+            });
+    };
+
+    useEffect(() => {
+        const token = localStorage.getItem("access");
+        if(token){
+            loadAssets();
+        }
     }, []);
 
-    useEffect(loadAssets, []);
-
-    return (
-        <>
-        <AssetCreate onCreated={loadAssets} />
-        <ul>
-            {assets.map((asset) => (
-            <li key={asset.id}>{asset.name}</li>
-            ))}
-        </ul>
-        </>
-    );
+        return (
+            <>
+                <AssetCreate onCreated={loadAssets} />
+                <ul>
+                    {assets.length === 0 ? <li>No assets yet</li> :
+                    assets.map((asset) => <li key={asset.id}>{asset.name}</li>)}
+                </ul>
+            </>
+        );
 }
 
 
