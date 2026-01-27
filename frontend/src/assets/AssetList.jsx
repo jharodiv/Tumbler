@@ -21,19 +21,21 @@ function AssetList()
     };
 
     useEffect(() => {
-        loadAssets();
+        const token = localStorage.getItem("access");
+        if(token){
+            loadAssets();
+        }
     }, []);
 
-    return (
-        <>
-        <AssetCreate onCreated={loadAssets} />
-        <ul>
-            {assets.map((asset) => (
-            <li key={asset.id}>{asset.name}</li>
-            ))}
-        </ul>
-        </>
-    );
+        return (
+            <>
+                <AssetCreate onCreated={loadAssets} />
+                <ul>
+                    {assets.length === 0 ? <li>No assets yet</li> :
+                    assets.map((asset) => <li key={asset.id}>{asset.name}</li>)}
+                </ul>
+            </>
+        );
 }
 
 

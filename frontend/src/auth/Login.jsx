@@ -12,23 +12,20 @@ function Login()
     const {loginUser} = useContext(AuthContext);
 
 
-    const handleSubmit = async (e) => 
-    {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try
-        {
-            const data = await login(username, password);
-            loginUser();
-            console.log(data);
+        try {
+            const data = await login(username, password); 
+            loginUser(); 
             navigate("/assets");
-            alert("Login Successful");
-        } catch (err)
-        {
-            console.error(err)
+            //alert("Login Successful");
+        } catch (err) {
+            console.error(err);
             alert("Login Failed");
         }
     };
+
 
 
     return (

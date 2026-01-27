@@ -12,7 +12,7 @@ function App() {
           path="/assets"
           element={
             <ProtectedRoute>
-              <AssetList />
+              <AssetList></AssetList>
             </ProtectedRoute>
           }
         />
