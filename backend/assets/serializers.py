@@ -4,4 +4,5 @@ from .models import Asset
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asset
-        fields = '__all__'
+        fields = ["id", "name", "asset_tag", "status", "created_at", "owner"]
+        read_only_fields = ["id", "created_at", "owner"] 
