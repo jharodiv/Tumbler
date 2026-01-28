@@ -4,21 +4,25 @@ export const AuthContext = createContext();
 
 
 export function AuthProvider ({children}){
-    const [isAuthenticated, setAuthenticated] = useState(false);
+    const [isAuthenticated, setAuthenticated] = useState(null);
 
     useEffect(() => 
     {
         const token = localStorage.getItem("access");
-        if (token) setAuthenticated(true);
-
+        if (token){
+            setAuthenticated(token);
+        }
     }, []);
 
+    const loginUser = (access) => {
+        setAuthenticated(access);
+        localStorage.setItem("access", access)
+    }
 
-    const loginUser = () => setAuthenticated(true);
     const logoutUser = () => {
+        setAuthenticated(null);
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
-        setAuthenticated(false);
     };  
 
 
