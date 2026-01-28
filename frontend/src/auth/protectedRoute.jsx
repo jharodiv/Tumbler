@@ -5,9 +5,9 @@ import { AuthContext } from "./authContext";
 
 export default function ProtectedRoute({children})
 {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { accessToken } = useContext(AuthContext);
 
-    if(isAuthenticated)
+    if(accessToken)
     {
         return <Navigate to="/assets" replace />;
     }
