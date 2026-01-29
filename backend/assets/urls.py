@@ -6,3 +6,4 @@ router = DefaultRouter()
 router.register(r'assets', AssetViewSet, basename='assets')
 
 urlpatterns = router.urls
+#commit
