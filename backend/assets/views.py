@@ -11,8 +11,10 @@ class AssetViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-        return Asset.objects.filter(owner = self.request.user)
-    
+        user = self.request.user
+        if user.is_staff:
+            return Asset.objects.all()
+        return Asset.objects.filter(owner=user)
 
     def perform_create(self, serializer):
         serializer.save(owner = self.request.user)
