@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import styles from "./Login.module.css"
 import { login } from "./authService";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./authContext";
@@ -11,6 +12,7 @@ function Login()
     const [password, setPassword] = useState("");
     const navigate = useNavigate()
     const {loginUser} = useContext(AuthContext);
+    const [error, setError] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,28 +26,41 @@ function Login()
             //alert("Login Successful");
         } catch (err) {
             console.error(err);
-            alert("Login Failed");
+            setError("Login Failed");
         }
     };
 
 
+    return(
+        <div className={styles.container}>
+            <div className={styles.card}>
+                <h2 className={styles.heading}>Welcome Back</h2>
 
-    return (
-        <form onSubmit={handleSubmit}>
-        <input
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-        </form>
-    );
+                {error && <div className={styles.error}>{error}</div>}
+
+                <form onSubmit={handleSubmit}>
+                    <input
+                    className={styles.inputField}
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)} 
+                    />
+                    <input
+                     className={styles.inputField}
+                     placeholder="Password"
+                     value={password}
+                     onChange={(e) =>setPassword(e.target.value)}
+                     />
+                     <button type="submit" className={styles.button}>
+                        Login
+                     </button>
+                </form>
+                <p className={styles.footer}>
+                    Don't have an account? <a href="/">Sign up</a>
+                </p>
+            </div>
+        </div>
+    )
 }
 
 export default Login;
