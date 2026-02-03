@@ -46,14 +46,15 @@ function Login()
                     onChange={(e) => setUsername(e.target.value)} 
                     />
                     <input
-                     className={styles.inputField}
-                     placeholder="Password"
-                     value={password}
-                     onChange={(e) =>setPassword(e.target.value)}
-                     />
-                     <button type="submit" className={styles.button}>
+                    type="password"
+                    className={styles.inputField}
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) =>setPassword(e.target.value)}
+                    />
+                    <button type="submit" className={styles.button}>
                         Login
-                     </button>
+                    </button>
                 </form>
                 <p className={styles.footer}>
                     Don't have an account? <a href="/">Sign up</a>

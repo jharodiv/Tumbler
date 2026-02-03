@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createAsset } from "./assetServices";
+import styles from "./AssetsList.module.css";
 
 function AssetCreate( {onCreated} ){
     const [name, setName] = useState ("");
@@ -23,18 +24,35 @@ function AssetCreate( {onCreated} ){
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input placeholder="Asset Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)} 
+        <div className={styles.container}>
+        {/* Create Asset */}
+        <div className={styles.formCard}>
+            <h2 className={styles.formTitle}>Create Asset</h2>
+            <form onSubmit={handleSubmit}>
+            <input
+                className={styles.input}
+                placeholder="Asset Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
             />
-            <input placeholder="Asset Tag" value={assetTag} onChange={e => setAssetTag(e.target.value)}/>
-            <select value={status} onChange={e => setStatus(e.target.value)}>
-                <option value="available">Available</option>
+            <input
+                className={styles.input}
+                placeholder="Asset Tag"
+                value={assetTag}
+                onChange={(e) => setAssetTag(e.target.value)}
+            />
+            <select name="Asset Availability" 
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}>
+                <option value="available"> Available </option>
                 <option value="assigned">Assigned</option>
             </select>
-            <button>Create</button>
-        </form>
+            <button className={styles.button} type="submit">
+                Create Asset
+            </button>
+            </form>
+        </div>
+        </div>
     );
 }
 
