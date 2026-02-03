@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import api from "../api/axios";
+import styles from "./AssetsList.module.css";
 import AssetCreate from "../assets/AssetCreate";
 import { AuthContext } from "../auth/authContext";
 
@@ -13,6 +14,7 @@ function AssetList()
         try{
             const res = await api.get("/assets/");
             setAssets(res.data);
+            console.log("Assets: ", assets);
         } catch (err){
             console.error(err);
         }
@@ -27,14 +29,24 @@ function AssetList()
 
         return (
             <>
-                <AssetCreate onCreated={loadAssets} />
-                <ul>
-                    {assets.length === 0 ? <li>No assets yet</li> :
-                    assets.map((asset) => <li key={asset.id}>{asset.name}</li>)}
-                </ul>
+            <AssetCreate onCreated={loadAssets}></AssetCreate>
+            <div className={styles.assetList}>
+                {assets.length == 0? (
+                    <p>No assets</p>
+                ) : (
+                    assets.map(
+                        (asset) => (
+                            <div key={asset.id} className={styles.assetCard}>
+                                <div className={styles.assetName}>{asset.name}</div>
+                                <div className={styles.assetInfo}>Tag: {asset.asset_tag}</div>
+                                <div className={styles.assetInfo}>Status: {asset.status}</div>
+                            </div>
+                        )
+                    )
+                )}
+            </div>
             </>
         );
 }
-
 
 export default AssetList;
