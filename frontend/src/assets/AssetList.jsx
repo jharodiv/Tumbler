@@ -13,7 +13,7 @@ function AssetList()
     const loadAssets = async () =>{
         try{
             const res = await api.get("/assets/");
-            setAssets(res.data);
+            setAssets(res.data.results ?? res.data);
             console.log("Assets: ", assets);
         } catch (err){
             console.error(err);
