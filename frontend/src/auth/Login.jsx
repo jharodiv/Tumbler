@@ -4,6 +4,7 @@ import { login } from "./authService";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./authContext";
 import { attachToken } from "../api/axios";
+import { Link } from "react-router-dom";
 
 
 function Login()
@@ -57,7 +58,7 @@ function Login()
                     </button>
                 </form>
                 <p className={styles.footer}>
-                    Don't have an account? <a href="/">Sign up</a>
+                    Don't have an account? <Link to="/"> Sign up </Link>
                 </p>
             </div>
         </div>
