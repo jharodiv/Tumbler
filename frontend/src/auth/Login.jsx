@@ -58,7 +58,7 @@ function Login()
                     </button>
                 </form>
                 <p className={styles.footer}>
-                    Don't have an account? <Link to="/"> Sign up </Link>
+                    Don't have an account? <Link to="/registration"> Sign up </Link>
                 </p>
             </div>
         </div>
