@@ -1,0 +1,120 @@
+  /* Container fills the screen */
+  .container {
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Center content */
+  .content {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  /* Card */
+  .card {
+    width: 100%;
+    max-width: 400px;
+    padding: 1.75rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Heading */
+  .heading {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  /* Inputs */
+  .inputField {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .form{
+    padding: 0.75rem 0;
+  }
+
+    /* Form Container */
+  .formBody{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Button */
+  .button {
+    padding: 0.75rem;
+    background-color: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background-color: #4338ca;
+  }
+
+  /* Footer text */
+  .footer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #555;
+  }
+
+  .footer a {
+    color: #4f46e5;
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  /* =========================
+    📱 Mobile (default)
+    ========================= */
+  /* Already optimized for mobile */
+
+
+  /* =========================
+    📱 Small devices (≤ 360px)
+    ========================= */
+  @media (max-width: 360px) {
+    .card {
+      padding: 1.25rem;
+    }
+
+    .heading {
+      font-size: 1.4rem;
+    }
+  }
+
+
+  @media (min-width: 768px) {
+    .card {
+      max-width: 420px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .card {
+      max-width: 450px;
+    }
+  }
