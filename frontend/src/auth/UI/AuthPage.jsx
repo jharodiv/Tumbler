@@ -94,9 +94,6 @@ export default function AuthPage({ type, onSubmit }) {
 
                 {type === "login" && (
                     <div className={styles.forgotRow}>
-                    <Link to="/forgot-password" className={styles.forgotLink}>
-                        Forgot password?
-                    </Link>
                     </div>
                 )}
 

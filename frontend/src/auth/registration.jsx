@@ -17,7 +17,6 @@ export default function Registration(){
     const navigate = useNavigate();
 
     const onSubmit = async (username,password,email) =>{
-        e.preventDefault();
         setError("");
 
         try

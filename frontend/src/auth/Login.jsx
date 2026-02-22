@@ -15,7 +15,6 @@ export default function Login()
     const [error, setError] = useState("");
 
     const onSubmit = async (username,password) => {
-        e.preventDefault();
 
         try {
             const data = await login(username, password); 
