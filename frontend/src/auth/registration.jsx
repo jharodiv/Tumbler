@@ -16,7 +16,7 @@ export default function Registration(){
     const { loginUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const onSubmit = async (e) =>{
+    const onSubmit = async (username,password,email) =>{
         e.preventDefault();
         setError("");
 
