@@ -14,7 +14,7 @@ export default function Login()
     const {loginUser} = useContext(AuthContext);
     const [error, setError] = useState("");
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (username,password) => {
         e.preventDefault();
 
         try {

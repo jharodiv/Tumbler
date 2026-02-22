@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 
 export default function AuthPage({ type, onSubmit }) {
     const [focused, setFocused] = useState(null);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
 
     return (
         <div className={styles.container}>
@@ -29,7 +32,7 @@ export default function AuthPage({ type, onSubmit }) {
                 className={styles.form}
                 onSubmit={(e) => {
                 e.preventDefault();
-                onSubmit(e);
+                onSubmit(username,password,email);
                 }}
             >
                 <div className={styles.formBody}>
@@ -46,6 +49,8 @@ export default function AuthPage({ type, onSubmit }) {
                     required
                     onFocus={() => setFocused("username")}
                     onBlur={() => setFocused(null)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
 
@@ -63,6 +68,8 @@ export default function AuthPage({ type, onSubmit }) {
                         required
                         onFocus={() => setFocused("email")}
                         onBlur={() => setFocused(null)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     </div>
                 )}
@@ -80,6 +87,8 @@ export default function AuthPage({ type, onSubmit }) {
                     required
                     onFocus={() => setFocused("password")}
                     onBlur={() => setFocused(null)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
 
