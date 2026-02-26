@@ -8,11 +8,8 @@ import AuthPage from "./UI/AuthPage";
 
 export default function Login()
 { 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const navigate = useNavigate()
     const {loginUser} = useContext(AuthContext);
-    const [error, setError] = useState("");
 
     const onSubmit = async (username,password) => {
 
