@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import api from "../api/axios";
 import styles from "./AssetsList.module.css";
-import AssetCreate from "../assets/AssetCreate";
+import AssetCreate from "./AssetCreate";
 import { AuthContext } from "../auth/authContext";
 
 

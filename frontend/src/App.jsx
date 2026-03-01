@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./auth/Login";
-import AssetList from "./assets/AssetList";
+//import AssetList from "./assets/AssetList";
 import ProtectedRoute from "./auth/protectedRoute";
 import Registration from "./auth/registration";
+import Dashboard from "./assetsDashboard/Temporary/DashboardList";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           path="/assets"
           element={
             <ProtectedRoute>
-              <AssetList></AssetList>
+              <Dashboard></Dashboard>
             </ProtectedRoute>
           }
         />
