@@ -12,7 +12,7 @@ export default function DashboardList({ onEdit }) {
     const [selected, setSelected] = useState(null);
     const [deleting, setDeleting] = useState(null);
 
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("access");
     const user = token ? jwtDecode(token):null;
 
     useEffect(() => {
@@ -37,7 +37,7 @@ export default function DashboardList({ onEdit }) {
         // Will add logic for normal users later on
     });
 
-    async function handleDelete(id) {
+    /*async function handleDelete(id) {
         setDeleting(id);
         try {
         await deleteAsset(id);
@@ -48,7 +48,7 @@ export default function DashboardList({ onEdit }) {
         } finally {
         setDeleting(null);
         }
-    }
+    }*/
 
     return(
         <AssetView
@@ -64,7 +64,7 @@ export default function DashboardList({ onEdit }) {
             selected={selected}
             setSelected={setSelected}
             deleting={deleting}
-            handleDelete={handleDelete}
+            //handleDelete={handleDelete}
             visible={visible}
         ></AssetView>
     );
