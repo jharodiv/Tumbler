@@ -33,22 +33,16 @@ export default function DashboardList({ onEdit }) {
             return true
         }
 
-        return false; //Non admin users shows nothing "FOR NOW" 
-        // Will add logic for normal users later on
-    });
+        if(user.is_staff){
+            if (filter !== "all" && a.status !== filter) return false;
 
-    /*async function handleDelete(id) {
-        setDeleting(id);
-        try {
-        await deleteAsset(id);
-        setAssets((prev) => prev.filter((a) => a.id !== id));
-        if (selected?.id === id) setSelected(null);
-        } catch (err) {
-        alert(err.response?.data?.message ?? "Delete failed");
-        } finally {
-        setDeleting(null);
-        }
-    }*/
+            const q = search.toLowerCase();
+            if (q && !a.name?.toLowerCase().includes(q) && !a.asset_tag?.toLowerCase().includes(q)) return false;
+            return true;       
+    }
+
+        return false;
+    });
 
     return(
         <AssetView
