@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAssets, deleteAsset } from "../assetServices";
+import { getAssets } from "../assetServices";
 import { jwtDecode } from "jwt-decode";
 import AssetView from "./AssetView";
 
@@ -13,41 +13,45 @@ export default function DashboardList({ onEdit }) {
     const [deleting, setDeleting] = useState(null);
 
     const token = localStorage.getItem("access");
-    const user = token ? jwtDecode(token):null;
+    const user  = token ? jwtDecode(token) : null;
 
     useEffect(() => {
         getAssets()
-        .then((res) => setAssets(res.data))
-        .catch((err) => setError(err.response?.data?.message ?? err.message))
-        .finally(() => setLoading(false));
+            .then((res) => setAssets(res.data))
+            .catch((err) => setError(err.response?.data?.message ?? err.message))
+            .finally(() => setLoading(false));
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        window.location.href = "/login"; // adjust route if needed
+    };
 
     const visible = assets.filter((a) => {
         if (!user) return false;
-        if(filter !== "all" && a.status !==filter) return false;
-        
+        if (filter !== "all" && a.status !== filter) return false;
         const q = search.toLowerCase();
-        if(q && !a.name?.toLowerCase().includes(q) && !a.asset_tag?.toLowerCase().includes(q)) return false;
-
+        if (q && !a.name?.toLowerCase().includes(q) && !a.asset_tag?.toLowerCase().includes(q)) return false;
         return true;
     });
 
-    return(
-        <AssetView
-            user={user}
-            onEdit={onEdit}
-            assets={assets}
-            loading={loading}
-            error={error}
-            search={search}
-            setSearch={setSearch}
-            filter={filter}
-            setFilter={setFilter}
-            selected={selected}
-            setSelected={setSelected}
-            deleting={deleting}
-            //handleDelete={handleDelete}
-            visible={visible}
-        ></AssetView>
+    return (
+            <AssetView
+                user={user}
+                onEdit={onEdit}
+                onLogout={handleLogout}
+                assets={assets}
+                loading={loading}
+                error={error}
+                search={search}
+                setSearch={setSearch}
+                filter={filter}
+                setFilter={setFilter}
+                selected={selected}
+                setSelected={setSelected}
+                deleting={deleting}
+                visible={visible}
+            />
     );
 }

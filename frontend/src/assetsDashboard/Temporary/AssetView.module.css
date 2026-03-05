@@ -1,104 +1,255 @@
-/* ─── Tokens ─────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════════ */
 :root {
-    --mono: 'Geist Mono', 'Fira Code', monospace;
+    --mono:       'Geist Mono', 'Fira Code', 'Cascadia Code', monospace;
+    --bg-page:    #04080f;
+    --bg-surface: #060b12;
+    --bg-card:    #080d14;
+    --bg-input:   #0a1020;
+    --border:     #131c2b;
+    --border-mid: #1e293b;
+    --text-hi:    #f1f5f9;
+    --text-mid:   #94a3b8;
+    --text-lo:    #334155;
+    --text-dim:   #1e3a5a;
+    --blue:       #3b82f6;
+    --topbar-h:   52px;
+
+    /* Responsive spacing scale */
+    --space-xs:   clamp(6px,  1vw,  8px);
+    --space-sm:   clamp(8px,  1.5vw, 12px);
+    --space-md:   clamp(12px, 2vw,  16px);
+    --space-lg:   clamp(16px, 2.5vw, 24px);
 }
 
-/* ─── Layout ──────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL RESET (scoped to component)
+   ═══════════════════════════════════════════════════════════════ */
+.wrapper * {
+    box-sizing: border-box;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ROOT WRAPPER
+   Strategy: fill the full viewport dynamically.
+   100dvh collapses with mobile browser chrome; 100vh is fallback.
+   ═══════════════════════════════════════════════════════════════ */
 .wrapper {
     display: flex;
-    gap: 20px;
-    height: 100%;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
     font-family: var(--mono);
+    background-color: var(--bg-page);
+    background-image:
+        linear-gradient(rgba(30,41,59,0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,41,59,0.15) 1px, transparent 1px);
+    background-size: 40px 40px;
+    /* Single scroll context — children opt into their own */
+    overflow: hidden;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   TOP BAR
+   ═══════════════════════════════════════════════════════════════ */
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-lg);
+    height: var(--topbar-h);
+    background: rgba(4,8,15,0.98);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    gap: var(--space-sm);
+    /* Keeps topbar above any absolutely-positioned children */
+    position: relative;
+    z-index: 20;
+}
+
+.topBarLeft {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 0;
+    flex: 1;
+}
+
+.topBarRight {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+}
+
+.topBarTitle {
+    color: var(--text-hi);
+    font-size: clamp(11px, 1.3vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+}
+
+.countLabel {
+    color: var(--text-lo);
+    font-size: clamp(9px, 0.9vw, 10px);
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+}
+
+.userLabel {
+    color: #475569;
+    font-size: clamp(10px, 1vw, 11px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.logoutBtn {
+    background: var(--bg-input);
+    border: 1px solid var(--border-mid);
+    border-radius: 7px;
+    color: #64748b;
+    font-family: var(--mono);
+    font-size: clamp(10px, 1vw, 11px);
+    font-weight: 600;
+    padding: 5px clamp(10px, 1.5vw, 14px);
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    /* min tap target */
+    min-height: 32px;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.logoutBtn:hover,
+.logoutBtn:focus-visible {
+    outline: none;
+    border-color: #7f1d1d;
+    color: #f87171;
+    background: rgba(127,29,29,0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BODY — desktop: row, mobile: column
+   flex: 1 + min-height: 0 is the key to letting children scroll
+   without the parent growing infinitely.
+   ═══════════════════════════════════════════════════════════════ */
+.body {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-md);
+    flex: 1;
+    min-height: 0;
+    padding: var(--space-md);
+    overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIST COLUMN
+   ═══════════════════════════════════════════════════════════════ */
 .listCol {
     flex: 1;
+    min-width: 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    min-width: 0;
+    gap: var(--space-sm);
+    max-width: 100%;
 }
 
-/* ─── Toolbar ─────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════════════════════════════ */
 .toolbar {
     display: flex;
-    gap: 10px;
+    gap: var(--space-xs);
+    flex-shrink: 0;
 }
 
 .searchWrap {
     flex: 1;
     position: relative;
+    min-width: 0;
 }
 
 .searchIcon {
     position: absolute;
-    left: 12px;
+    left: 13px;
     top: 50%;
     transform: translateY(-50%);
-    color: #475569;
+    color: var(--text-lo);
     font-size: 15px;
     pointer-events: none;
+    line-height: 1;
+    user-select: none;
 }
 
 .searchInput {
     width: 100%;
-    box-sizing: border-box;
-    background: #0f172a;
-    border: 1px solid #1e293b;
-    border-radius: 10px;
-    padding: 0.65rem 1rem 0.65rem 2.25rem;
-    color: #e2e8f0;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 9px 12px 9px 35px;
+    color: var(--text-hi);
     font-family: var(--mono);
-    font-size: 13px;
+    font-size: clamp(11px, 1.1vw, 12px);
     outline: none;
     transition: border-color 0.15s;
+    /* iOS zoom prevention — font-size must be ≥16px OR we suppress zoom */
+    touch-action: manipulation;
+    -webkit-appearance: none;
 }
 
-.searchInput:focus {
-    border-color: #3b82f6;
-}
+.searchInput::placeholder { color: var(--text-dim); }
+.searchInput:focus        { border-color: var(--blue); }
 
 .filterSelect {
-    background: #0f172a;
-    border: 1px solid #1e293b;
-    border-radius: 10px;
-    padding: 0 1rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 0 28px 0 12px;
     color: #64748b;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: clamp(10px, 1vw, 11px);
     outline: none;
     cursor: pointer;
+    width: clamp(90px, 18vw, 140px);
+    flex-shrink: 0;
     transition: border-color 0.15s;
+    /* Normalise native select across browsers/platforms */
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23334155'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    touch-action: manipulation;
 }
 
-.filterSelect:focus {
-    border-color: #3b82f6;
-}
+.filterSelect:focus { border-color: var(--blue); }
 
-/* ─── Meta label ──────────────────────────────────────────────── */
-.countLabel {
-    color: #334155;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-}
-
-/* ─── States ──────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   STATE VIEWS
+   ═══════════════════════════════════════════════════════════════ */
 .centered {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    padding: var(--space-md);
 }
 
-.loadingText {
-    color: #334155;
-    font-size: 13px;
-}
+.loadingText { color: var(--text-lo);    font-size: 13px; }
+.emptyText   { color: var(--border-mid); font-size: 13px; }
 
 .errorBox {
     color: #ef4444;
     font-size: 13px;
-    text-align: center;
 }
 
 .errorIcon {
@@ -106,52 +257,67 @@
     margin-bottom: 8px;
 }
 
-.emptyText {
-    color: #1e293b;
-    font-size: 13px;
-}
-
-/* ─── Cards list ──────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   CARD LIST
+   flex: 1 + overflow-y: auto makes this the single scrollable
+   container — no height hacks needed.
+   ═══════════════════════════════════════════════════════════════ */
 .cardList {
     flex: 1;
+    min-height: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
+    /* safe-area for iPhone home indicator */
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
 }
 
+.cardList::-webkit-scrollbar       { width: 3px; }
+.cardList::-webkit-scrollbar-track { background: transparent; }
+.cardList::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   ASSET CARD
+   ═══════════════════════════════════════════════════════════════ */
 .card {
-    background: #080d14;
-    border: 1px solid #1e293b;
-    border-radius: 12px;
-    padding: 0.9rem 1.1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: clamp(10px, 1.5vw, 12px) clamp(12px, 1.5vw, 14px);
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 14px;
-    transition: border-color 0.15s, background 0.15s;
+    gap: clamp(10px, 1.5vw, 13px);
+    transition: border-color 0.13s, background 0.13s;
+    /* suppress iOS tap highlight */
+    -webkit-tap-highlight-color: transparent;
+    /* prevent accidental text selection on rapid tap */
+    user-select: none;
+    width: 100%;
 }
 
-.card:hover {
-    background: #0d1520;
-    border-color: #334155;
-}
+.card:hover         { background: #0a1220; border-color: #2d3f55; }
+.card:active        { background: #0c1829; }
 
 .cardSelected {
-    background: #0f172a;
-    border-color: #3b82f6;
+    background: #0c1829;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 1px rgba(59,130,246,0.1);
 }
 
 .cardIcon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: clamp(32px, 5vw, 38px);
+    height: clamp(32px, 5vw, 38px);
+    border-radius: 9px;
     background: #0f172a;
-    border: 1px solid #1e293b;
+    border: 1px solid var(--border-mid);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: clamp(14px, 2.2vw, 17px);
     flex-shrink: 0;
 }
 
@@ -161,8 +327,8 @@
 }
 
 .cardName {
-    color: #f1f5f9;
-    font-size: 13px;
+    color: var(--text-hi);
+    font-size: clamp(12px, 1.3vw, 13px);
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
@@ -170,16 +336,21 @@
 }
 
 .cardTag {
-    color: #334155;
-    font-size: 11px;
+    color: var(--text-lo);
+    font-size: clamp(10px, 1vw, 11px);
     margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* ─── Status badge ────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   STATUS BADGE
+   ═══════════════════════════════════════════════════════════════ */
 .badge {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     padding: 3px 9px;
     border-radius: 5px;
     flex-shrink: 0;
@@ -189,159 +360,343 @@
     width: 5px;
     height: 5px;
     border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .badgeLabel {
     font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font-weight: 700;
+    letter-spacing: 0.07em;
 }
 
-/* ─── Detail panel ────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   DETAIL PANEL
+   ─────────────────────────────────────────────────────────────
+   Desktop  (>768px)  : side panel, fixed width, scrolls alone
+   Tablet   (≤768px)  : slides up from bottom as overlay
+   ═══════════════════════════════════════════════════════════════ */
 .detail {
-    width: 300px;
+    width: clamp(260px, 30vw, 320px);
     flex-shrink: 0;
-    background: #080d14;
-    border: 1px solid #1e293b;
-    border-radius: 14px;
-    padding: 1.5rem;
+    min-height: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: clamp(14px, 2vw, 20px);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 0;
-    animation: slideIn 0.18s ease;
+    animation: slideIn 0.18s ease both;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
 }
 
+.detail::-webkit-scrollbar       { width: 3px; }
+.detail::-webkit-scrollbar-track { background: transparent; }
+.detail::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
 @keyframes slideIn {
-    from { opacity: 0; transform: translateX(10px); }
+    from { opacity: 0; transform: translateX(14px); }
     to   { opacity: 1; transform: translateX(0); }
 }
 
+/* ─── Detail header ─── */
 .detailHeader {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
+    margin-bottom: 12px;
+    gap: 8px;
 }
 
 .detailMeta {
-    color: #334155;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    margin-bottom: 5px;
+    color: var(--text-dim);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    margin-bottom: 4px;
 }
 
 .detailTitle {
-    color: #f1f5f9;
-    font-size: 15px;
+    color: var(--text-hi);
+    font-size: clamp(13px, 1.6vw, 15px);
     font-weight: 700;
     line-height: 1.3;
+    word-break: break-word;
 }
 
 .closeBtn {
     background: none;
     border: none;
-    color: #334155;
+    color: #2d3f55;
     cursor: pointer;
     font-size: 18px;
-    padding: 0;
+    padding: 4px;
     line-height: 1;
-    transition: color 0.15s;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
+    /* accessible tap target */
+    min-width: 32px;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.closeBtn:hover {
-    color: #94a3b8;
+.closeBtn:hover,
+.closeBtn:focus-visible {
+    outline: none;
+    color: var(--text-mid);
+    background: rgba(255,255,255,0.04);
 }
 
-/* ─── Detail fields ───────────────────────────────────────────── */
-.field {
-    padding-bottom: 0.9rem;
-    margin-bottom: 0.9rem;
-    border-bottom: 1px solid #0f172a;
-}
-
-.fieldLabel {
-    color: #334155;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    margin-bottom: 4px;
-}
-
-.fieldValue {
-    color: #94a3b8;
-    font-size: 13px;
-}
-
-/* ─── Detail status badge ─────────────────────────────────────── */
-.detailBadgeWrap {
-    margin-bottom: 1.5rem;
-}
-
+/* ─── Detail status badge ─── */
 .detailBadge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 10px;
-    border-radius: 6px;
+    padding: 5px 12px;
+    border-radius: 7px;
+    margin-bottom: 16px;
 }
 
 .detailBadgeDot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .detailBadgeLabel {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.06em;
 }
 
-/* ─── Admin actions ───────────────────────────────────────────── */
+/* ─── Detail fields ─── */
+.fieldList {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.field {
+    padding-bottom: 13px;
+    margin-bottom: 13px;
+    border-bottom: 1px solid var(--border);
+}
+
+.field:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.fieldLabel {
+    color: var(--text-dim);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    margin-bottom: 4px;
+}
+
+.fieldValue {
+    color: var(--text-mid);
+    font-size: clamp(12px, 1.2vw, 13px);
+    word-break: break-word;
+}
+
+/* ─── Admin actions ─── */
 .actions {
     display: flex;
     gap: 8px;
     margin-top: auto;
+    padding-top: 16px;
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
 }
 
 .editBtn {
     flex: 1;
-    padding: 0.6rem;
-    background: #1e40af22;
-    border: 1px solid #1e40af55;
-    border-radius: 8px;
+    padding: 10px;
+    background: rgba(30,64,175,0.12);
+    border: 1px solid rgba(30,64,175,0.3);
+    border-radius: 9px;
     color: #60a5fa;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
     font-family: var(--mono);
+    font-size: clamp(10px, 1vw, 11px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    min-height: 40px;
     transition: background 0.15s, border-color 0.15s;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.editBtn:hover {
-    background: #1e40af44;
-    border-color: #1e40af99;
+.editBtn:hover,
+.editBtn:focus-visible {
+    outline: none;
+    background: rgba(30,64,175,0.25);
+    border-color: rgba(30,64,175,0.6);
 }
 
 .deleteBtn {
     flex: 1;
-    padding: 0.6rem;
-    background: #7f1d1d22;
-    border: 1px solid #7f1d1d55;
-    border-radius: 8px;
+    padding: 10px;
+    background: rgba(127,29,29,0.12);
+    border: 1px solid rgba(127,29,29,0.3);
+    border-radius: 9px;
     color: #f87171;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
     font-family: var(--mono);
+    font-size: clamp(10px, 1vw, 11px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    min-height: 40px;
     transition: background 0.15s, border-color 0.15s;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.deleteBtn:hover:not(:disabled) {
-    background: #7f1d1d44;
-    border-color: #7f1d1d99;
+.deleteBtn:hover:not(:disabled),
+.deleteBtn:focus-visible:not(:disabled) {
+    outline: none;
+    background: rgba(127,29,29,0.25);
+    border-color: rgba(127,29,29,0.6);
 }
 
 .deleteBtn:disabled {
-    opacity: 0.6;
+    opacity: 0.45;
     cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ─────────────────────────────────────────────────────────────
+   Strategy:
+   • >768px   Desktop  — side-by-side list + panel
+   • ≤768px   Tablet   — panel becomes a fixed bottom overlay
+                         so the list stays fully visible above it.
+                         Overlay = position:fixed, slides up.
+   • ≤480px   Mobile   — same overlay but taller (65vh)
+                         top bar collapses email label
+   • ≤360px   XS       — badge shrinks to dot-only
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet ── */
+@media (max-width: 768px) {
+    .topBar {
+        padding: 0 16px;
+    }
+
+    /* Body stays as a row — list fills all of it.
+       The detail panel is ripped out of flow (position: fixed). */
+    .body {
+        padding: 12px;
+        gap: 10px;
+        /* no overflow:hidden so fixed children still display */
+        overflow: visible;
+    }
+
+    .listCol {
+        /* Take full width now that panel is fixed */
+        flex: 1;
+        /* Give breathing room at bottom so last card
+           isn't hidden behind the fixed panel */
+        padding-bottom: 0;
+    }
+
+    /* Card list handles its own scroll inside listCol */
+    .cardList {
+        /* Enough room for panel (48vh) + gap */
+        padding-bottom: 52vh;
+    }
+
+    /* ── Fixed bottom panel ── */
+    .detail {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        /* Fixed height — tall enough to show fields, short enough
+           to keep list partially visible above it */
+        max-height: 48vh;
+        border-radius: 16px 16px 0 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        border-top: 1px solid var(--border-mid);
+        z-index: 30;
+        /* Elevate with a shadow instead of a backdrop */
+        box-shadow: 0 -20px 60px rgba(0,0,0,0.7), 0 -1px 0 var(--border-mid);
+        animation: slideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+
+    /* Dim the list behind the panel */
+    .listCol::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(4,8,15,0.55);
+        z-index: 25;
+        pointer-events: none;
+        animation: fadeIn 0.2s ease both;
+    }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+    :root { --topbar-h: 48px; }
+
+    .topBar { padding: 0 14px; }
+    .userLabel { display: none; }
+
+    .body { padding: 10px; }
+
+    .detail { max-height: 62vh; }
+
+    .cardList { padding-bottom: 66vh; }
+}
+
+/* ── Extra-small ── */
+@media (max-width: 360px) {
+    .topBarTitle { font-size: 11px; }
+    .countLabel  { display: none; }
+
+    /* Badge: dot only */
+    .badgeLabel { display: none; }
+    .badge {
+        padding: 6px;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        justify-content: center;
+    }
+}
+
+/* ── Wide desktop ── */
+@media (min-width: 1400px) {
+    .detail { width: 340px; }
+    .body   { padding: 24px; }
+}
+
+/* ── Animations ── */
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0.6; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .detail,
+    .logoutBtn,
+    .editBtn,
+    .deleteBtn,
+    .closeBtn {
+        transition: none;
+        animation: none;
+    }
 }
