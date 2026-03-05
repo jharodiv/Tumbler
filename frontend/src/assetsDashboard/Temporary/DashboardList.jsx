@@ -24,24 +24,12 @@ export default function DashboardList({ onEdit }) {
 
     const visible = assets.filter((a) => {
         if (!user) return false;
+        if(filter !== "all" && a.status !==filter) return false;
+        
+        const q = search.toLowerCase();
+        if(q && !a.name?.toLowerCase().includes(q) && !a.asset_tag?.toLowerCase().includes(q)) return false;
 
-        if(!user.is_staff && user.is_admin){
-            if(filter !== "all" && a.status !== filter) return false;
-
-            const q = search.toLowerCase();
-            if (q && !a.name?.toLowerCase().includes(q) && !a.asset_tag?.toLowerCase().includes(q)) return false;
-            return true
-        }
-
-        if(user.is_staff){
-            if (filter !== "all" && a.status !== filter) return false;
-
-            const q = search.toLowerCase();
-            if (q && !a.name?.toLowerCase().includes(q) && !a.asset_tag?.toLowerCase().includes(q)) return false;
-            return true;       
-    }
-
-        return false;
+        return true;
     });
 
     return(
