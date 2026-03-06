@@ -19,7 +19,6 @@ export default function Login()
             attachToken(data.access);
             
             navigate("/assets");
-            alert("Login Successful");
         } catch (err) {
             console.error(err);
             setError("Login Failed");
