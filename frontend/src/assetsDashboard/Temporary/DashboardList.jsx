@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAssets } from "../assetServices";
 import { jwtDecode } from "jwt-decode";
 import AssetView from "./AssetView";
+import { AuthContext } from "../../auth/authContext";
 
 export default function DashboardList({ onEdit }) {
     const [assets,   setAssets]   = useState([]);
@@ -11,6 +12,7 @@ export default function DashboardList({ onEdit }) {
     const [filter,   setFilter]   = useState("all");
     const [selected, setSelected] = useState(null);
     const [deleting, setDeleting] = useState(null);
+    const  { logoutUser } = useContext(AuthContext);
 
     const token = localStorage.getItem("access");
     const user  = token ? jwtDecode(token) : null;
@@ -23,9 +25,7 @@ export default function DashboardList({ onEdit }) {
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem("access");
-        localStorage.removeItem("refresh");
-        window.location.href = "/login"; // adjust route if needed
+        logoutUser();   
     };
 
     const visible = assets.filter((a) => {
