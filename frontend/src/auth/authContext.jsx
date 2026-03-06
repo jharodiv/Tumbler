@@ -23,6 +23,7 @@ export function AuthProvider ({children}){
         setAuthenticated(null);
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
+        window.location.href = '/';
     };  
 
 
