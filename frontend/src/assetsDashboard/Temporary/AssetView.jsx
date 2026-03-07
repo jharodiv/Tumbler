@@ -23,8 +23,6 @@ export default function AssetView({
     setFilter,
     selected,
     setSelected,
-    /*deleting,*/
-    /*handleDelete,*/
     visible,
 }) {
     return (
@@ -170,7 +168,8 @@ export default function AssetView({
                         <div className={styles.fieldList}>
                             {[
                                 ["Asset Tag",  selected.asset_tag],
-                                ["Owner",      selected.owner],
+                                ["Created By", selected.owner],
+                                ["Assigned To", selected.assigned_to],
                                 ["Created At", selected.created_at
                                     ? new Date(selected.created_at).toLocaleDateString()
                                     : "—"
