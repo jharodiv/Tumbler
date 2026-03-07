@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { login } from "./authService";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./authContext";
-import { attachToken } from "../api/axios";
 import AuthPage from "./UI/AuthPage";
 
 
@@ -16,7 +15,6 @@ export default function Login()
         try {
             const data = await login(username, password); 
             loginUser(data.access); 
-            attachToken(data.access);
             
             navigate("/assets");
         } catch (err) {
