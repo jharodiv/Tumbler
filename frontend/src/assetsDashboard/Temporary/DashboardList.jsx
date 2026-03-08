@@ -1,8 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { getAssets } from "../assetServices";
 import { jwtDecode } from "jwt-decode";
-import AssetView from "./AssetView";
 import { AuthContext } from "../../auth/authContext";
+import { ROUTE } from "../../route";
+import AssetView from "./AssetView";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardList({ onEdit }) {
     const [assets,   setAssets]   = useState([]);
@@ -16,6 +18,8 @@ export default function DashboardList({ onEdit }) {
 
     const token = localStorage.getItem("access");
     const user  = token ? jwtDecode(token) : null;
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAssets()
@@ -36,10 +40,14 @@ export default function DashboardList({ onEdit }) {
         return true;
     });
 
+    const handleEdit = (asset) =>{
+        navigate(ROUTE.editAssets(asset.id));
+    }
+
     return (
             <AssetView
                 user={user}
-                onEdit={onEdit}
+                onEdit={handleEdit}
                 onLogout={handleLogout}
                 assets={assets}
                 loading={loading}
@@ -52,6 +60,6 @@ export default function DashboardList({ onEdit }) {
                 setSelected={setSelected}
                 deleting={deleting}
                 visible={visible}
-            />
+            />  
     );
 }
