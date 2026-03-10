@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { updateAsset } from "../assetServices";
 import AssetEdit from "./AssetEdit";
-import { ROUTE } from "../..route";
+import { ROUTE } from "../../route";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function EditPage(){
     const { id } = useParams();
