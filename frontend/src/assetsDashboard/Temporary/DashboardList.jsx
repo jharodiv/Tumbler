@@ -41,7 +41,7 @@ export default function DashboardList({ onEdit }) {
     });
 
     const handleEdit = (asset) =>{
-        navigate(ROUTE.editAssets(asset.id));
+        navigate(ROUTE.toeditAssets(asset.id));
     }
 
     return (
