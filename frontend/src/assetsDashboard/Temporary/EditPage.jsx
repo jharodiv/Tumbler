@@ -3,6 +3,7 @@
     import AssetEdit from "./AssetEdit";
     import { ROUTE } from "../../route";
     import { useParams, useNavigate } from "react-router-dom";
+    import { getUsers } from "../assetServices";
 
     export default function EditPage(){
         const { id } = useParams();
@@ -15,6 +16,7 @@
         const [isDirty,   setIsDirty]   = useState(false);
         const [errors,    setErrors]    = useState({});
         const [saveState, setSaveState] = useState("idle")
+        const [ownerOptions, setOwnerOptions] = useState([]);
         useEffect(() =>{
             getAssets(id)
             .then((res) =>{
@@ -31,6 +33,18 @@
             .catch((err) => setError(err.response?.data?.message ?? err.message))
             .finally(() =>setLoading(false));
         }, [id]);
+
+        useEffect(() => {
+            getUsers()
+                .then((res) => {
+                    const options = res.data.map((user) => ({
+                        value: user.id,
+                        label: user.username,
+                    }));
+                    setOwnerOptions(options)
+                })
+                .catch((err) => console.error("Failed to fetch users:", err));
+        }, []);
 
         const handleSave = async () => {
             const err = validate(form);
@@ -61,13 +75,6 @@
         if (error) return <div>Error{error}</div>
         if (!asset || !form) return null
 
-        const ownerOption = asset.owners?.map((o) => (
-            {
-                value: o.id,
-                label: o.name
-            }
-        ))
-
         const userOption = [
             {
                 value: "",
@@ -90,7 +97,7 @@
                 saveState={saveState}       
                 onSave={handleSave}
                 onCancel={handleCancel}
-                ownerOptions={ownerOption}  
+                ownerOptions={ownerOptions}  
                 userOptions={userOption}  
                 onChange={handleChange}
             />
