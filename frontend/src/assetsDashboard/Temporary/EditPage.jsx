@@ -5,6 +5,17 @@
     import { useParams, useNavigate } from "react-router-dom";
     import { getUsers } from "../assetServices";
 
+    const validate = (data) => {
+        const errors = {};
+
+        if (!data.name?.trim())      errors.name      = "Name is required";
+        if (!data.asset_tag?.trim()) errors.asset_tag = "Asset tag is required";
+        if (!data.status)            errors.status    = "Status is required";
+        if (!data.owner)             errors.owner     = "Owner is required";
+
+        return errors;
+    };   
+
     export default function EditPage(){
         const { id } = useParams();
         const navigate = useNavigate();
