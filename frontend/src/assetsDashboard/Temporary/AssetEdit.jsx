@@ -33,6 +33,7 @@ function InputField({ label, id, required, hint, error, ...inputProps }) {
                 id={id}
                 className={[styles.fieldInput, error ? styles.fieldInputError : ""].join(" ")}
                 {...inputProps}
+                value={inputProps.value ?? ""}
             />
             {hint  && !error && <span className={styles.fieldHint}>{hint}</span>}
             {error && <span className={styles.fieldError}>⚠ {error}</span>}
