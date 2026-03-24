@@ -10,23 +10,26 @@ export default function Registration(){
 
     const { loginUser } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [error,setError] = useState("")
 
     const onSubmit = async (username,password,email) =>{
         setError("");
 
-        try
-        {
-            await register (username,email,password);
-            const data = await login(username,password);
-            loginUser(data.access);
+        try{
+            await register(username.trim(), email.trim(), password);
 
-            navigate("/assets");
-        }
-        catch (err){
+            try{
+                const data = await login(username.trim(), password);
+                loginUser(data.access);
+                navigate("/assets");
+            } catch (err){
+                navigate("/login", {state: {message: "Account Created. Please Login."}});
+            }
+        } catch (err){
             console.error(err);
             setError(err.response?.data?.detail || "Registration failed");
         }
     }
 
-    return <AuthPage type="signup" onSubmit={onSubmit}/>;
+    return <AuthPage type="signup" onSubmit={onSubmit} error={error}/>;
 }
