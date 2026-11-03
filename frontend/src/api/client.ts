@@ -1,10 +1,21 @@
 import axios, { AxiosError } from "axios";
 import type { ApiErrorBody, ApiResponse } from "@/api/types";
 
+// The backend serves every route under /api/v1 (see tumbler-backend-typescript src/routes/index.ts)
+const API_PREFIX = "/api/v1";
+
+// VITE_API_BASE_URL may be just the backend's origin (https://example.com) or already include
+// the prefix (https://example.com/api/v1, /api/v1). Either way the prefix ends up exactly once.
+// Unset means "" and resolves to /api/v1, which goes through the Vite dev proxy.
+function resolveBaseUrl(raw: string | undefined): string {
+    const base = (raw ?? "").trim().replace(/\/+$/, "");
+    return base.endsWith(API_PREFIX) ? base : `${base}${API_PREFIX}`;
+}
+
 // The backend authenticates with an httpOnly session cookie, so every request
 // must send credentials. In development /api is proxied by Vite (see vite.config.ts).
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || "/api/v1",
+    baseURL: resolveBaseUrl(import.meta.env.VITE_API_BASE_URL),
     withCredentials: true,
     headers: {
         "Content-Type": "application/json",
